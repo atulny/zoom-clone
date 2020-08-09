@@ -8,6 +8,8 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
+  console.log("in")
+
   res.redirect(`/${uuidV4()}`)
 })
 
@@ -17,6 +19,7 @@ app.get('/:room', (req, res) => {
 
 io.on('connection', socket => {
   socket.on('join-room', (roomId, userId) => {
+    console.log("socket")
     socket.join(roomId)
     socket.to(roomId).broadcast.emit('user-connected', userId)
 
@@ -26,4 +29,4 @@ io.on('connection', socket => {
   })
 })
 
-server.listen(3000)
+server.listen(3000);
